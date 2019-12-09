@@ -1,7 +1,11 @@
+const cheerio = require("cheerio");
+const axios = require("axios");
 const express = require('express');
-const app = express();
 const expbs = require('express-handlebars');
 const path = require('path');
+const mongoose = require('mongoose');
+
+const app = express();
 
 app.engine('handlebars', expbs({ 
   defaultLayout: 'main',
@@ -12,30 +16,26 @@ app.set('view engine', 'handlebars');
 
 // Routing
 app.get('/', (req, res) => {
-  res.render('./index', {layout:false});
-})
-
-app.get('/about', (req, res) => {
-  res.render('about', {layout:false});
+  res.render('./index');
 })
 
 app.listen(3000, () => {
   console.log('Server is starting at port ', 8080);
 });
 
-// var cheerio = require("cheerio");
-// var axios = require("axios");
-
-// axios.get("https://www.newegg.com/").then(function(response) {
+// // Make a request via axios to grab the HTML body from the site of your choice
+// axios.get("https://old.reddit.com/r/worldnews/").then(function(response) {
 
 //   // Load the HTML into cheerio and save it to a variable
 //   // '$' becomes a shorthand for cheerio's selector commands, much like jQuery's '$'
 //   var $ = cheerio.load(response.data);
 
-//   // An empty array to save the data that will be scraped
+//   // An empty array to save the data that we'll scrape
 //   var results = [];
 
-//     // Select div elements to be scraped
+//   // Select each element in the HTML body from which you want information.
+//   // NOTE: Cheerio selectors function similarly to jQuery's selectors,
+//   // but be sure to visit the package's npm page to see how it works
 //   $("div.").each(function(i, element) {
 
 //     var title = $(element).text();
